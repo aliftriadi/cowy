@@ -99,7 +99,7 @@ public class CameraActivity extends BaseActivity {
     DisplayMetrics displayMetrics = new DisplayMetrics();
     private String referenceObjectShape = "tetragon";
     private String referenceObjectName = "Stiker";
-    private float referenceObjectSize = 101.6f*101.6f;
+    private float referenceObjectSize = 101.6f*101.6f; // 4 inch in mm
     private int valueTP, valueLD, valuePB, valueTPP = 0;
 
     // These matrices will be used to move and zoom image
@@ -232,15 +232,17 @@ public class CameraActivity extends BaseActivity {
         FinishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("TAG", "onClick: " + valueTPP + valueTP );
-                Log.e("E:", "PBValue : " + valuePB);
                 if(valueTP == 0 || valueLD == 0 || valuePB == 0 || valueTPP == 0 ) {
                     Toast.makeText(getApplicationContext(), "Silahkan Masukan Nilai", Toast.LENGTH_SHORT).show();
                 } else {
                     lyOutput.setVisibility(VISIBLE);
                     PyObject pyObject = python.getModule("script");
-                    Log.e("OBJECT", "ValueTPP:" + valueTPP);
-                    PyObject object = pyObject.callAttr("main", (valueTP/10), (valueLD/10), (valuePB/10), (valueTPP/10));
+                    valueTP = (valueTP/10);
+                    valueLD = (valueLD/10);
+                    valuePB = (valuePB/10);
+                    valueTPP = (valueTPP/10);
+
+                    PyObject object = pyObject.callAttr("main", valueTP, (2 * (22/7) * (valueLD/2)), (valuePB), (valueTPP));
                     double output = Double.parseDouble(object.toString());
                     Log.e("OUTPUT", "OUTPUT : " + output);
                     DecimalFormat df = new DecimalFormat("#.##");
