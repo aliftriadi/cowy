@@ -232,6 +232,7 @@ public class CameraActivity extends BaseActivity {
         FinishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FinishButton.setEnabled(false);
                 if(valueTP == 0 || valueLD == 0 || valuePB == 0 || valueTPP == 0 ) {
                     Toast.makeText(getApplicationContext(), "Silahkan Masukan Nilai", Toast.LENGTH_SHORT).show();
                 } else {
@@ -248,6 +249,8 @@ public class CameraActivity extends BaseActivity {
                     DecimalFormat df = new DecimalFormat("#.##");
                     OutputText.setText( df.format(output) + " kg");
                 }
+
+                FinishButton.setEnabled(true);
             }
         });
 
@@ -543,7 +546,7 @@ public class CameraActivity extends BaseActivity {
      * @param picHeight original height of the image
      */
 
-    private void computeTransformation(float picWidth, float picHeight) {
+    private void computeTransformation          (float picWidth, float picHeight) {
         float height = picHeight;
         float width = picWidth;
 
